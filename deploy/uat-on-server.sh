@@ -7,4 +7,8 @@ curl -fsS -X POST "$BASE/api/auth/login" -H "Content-Type: application/json" \
 echo
 code=$(curl -s -o /dev/null -w "%{http_code}" "$BASE/api/dashboard")
 echo "GET /api/dashboard (no cookie) -> ${code}"
-test "$code" = "401" || test "$code" = "200"
+case "$code" in
+  401|200) ;;
+  *) exit 1 ;;
+esac
+echo "UAT_OK"
