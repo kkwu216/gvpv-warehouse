@@ -1,15 +1,14 @@
-/** PM2 config — copy to server app root; load secrets from .env via deploy script. */
+/** PM2 config — run from app root: pm2 start deploy/ecosystem.config.cjs */
+const path = require("node:path");
+
 module.exports = {
   apps: [
     {
       name: "gvpv-warehouse-v2",
-      cwd: __dirname + "/..",
+      cwd: path.join(__dirname, ".."),
       script: "npm",
       args: "start",
-      env: {
-        NODE_ENV: "production",
-        PORT: "3001",
-      },
+      env_file: ".env",
     },
   ],
 };
